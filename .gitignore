@@ -1,3 +1,2 @@
-
-osa1/kurssitiedot step1/node_modules
-osa1/kurssitiedot step2/node_modules
+.DS_Store
+node_modules
