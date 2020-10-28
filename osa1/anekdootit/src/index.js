@@ -46,7 +46,7 @@ const App = (props) => {
         <Button handleClick={()=>addVote(selected)} text="vote"></Button>
         <Button handleClick={()=>setSelected(getRandomInt(anecdotes.length))} text="next anecdote"></Button>
       </div>
-      <h2>Anectode withmost votes</h2>
+      <h2>Anectode with most votes</h2>
       <div>{props.anecdotes[votes.mostVotes]}</div>
       <div>has {votes.points[votes.mostVotes]} votes.</div>
     </div>
