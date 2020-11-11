@@ -1,24 +1,27 @@
 import React from 'react'
 
-const Countries = ({countryList}) => {
+const Countries = ({countryList,handleShowDetails}) => {
     let output
     
-    countryList.length === 1
+    countryList.length === 1 || output==='details'
     ? output = <div>
         <CountryDetails country={countryList[0]} />
     </div>
     : output = <div>{countryList.map((country) => 
-        <Country key={country.alpha2Code} country={country} />)}
+        <Country key={country.alpha2Code} country={country} handleShowDetails={handleShowDetails}/>)}
     </div>
-
 
     return (
         <div>{output}</div>
     )
 }
 
-const Country = ({country}) =>
-    <div>{country.name}</div>
+const Country = ({country,handleShowDetails}) =>
+    <div>
+        {country.name} 
+        <button type='button' value={country.name} onClick={handleShowDetails}>show</button>
+           
+    </div>
 
 const CountryDetails = ({country}) =>
     <div>

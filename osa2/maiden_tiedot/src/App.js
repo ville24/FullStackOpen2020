@@ -10,6 +10,14 @@ const App = () => {
   const countryList = countries.filter(country => 
     country.name.match(RegExp(filter,'i'))
   )
+
+  const handleFilter = (event) => {     
+    setFilter(event.target.value)
+  }
+
+  const handleShowDetails = (event) => {     
+    setFilter(event.target.value)
+  }
   
   let output
 
@@ -17,7 +25,10 @@ const App = () => {
   ? (
     countryList.length > 10
     ? output = 'Too many matches, specify another filter'
-    : output = <Countries countryList={countryList} />
+    : output = <Countries 
+                  countryList={countryList}
+                  handleShowDetails={handleShowDetails} 
+              />
   )
   : output = ''
 
@@ -28,11 +39,6 @@ const App = () => {
         setCountries(response.data)
       })
   }, [])
-
-  const handleFilter = (event) => {     
-    setFilter(event.target.value)
-  }
-
 
   return (
     <div>
