@@ -1,4 +1,6 @@
 import React from 'react'
+import Weather from './Weather'
+
 
 const Countries = ({countryList,handleShowDetails}) => {
     let output
@@ -23,7 +25,7 @@ const Country = ({country,handleShowDetails}) =>
            
     </div>
 
-const CountryDetails = ({country}) =>
+const CountryDetails = ({country}) => 
     <div>
         <h2>{country.name}</h2>
         <div>
@@ -39,7 +41,9 @@ const CountryDetails = ({country}) =>
         <div>
             <img src={country.flag} width='200' />
         </div>
+        <div><Weather country={country}/></div>
     </div>
+
 
 const Language = ({language}) =>
     <li>{language.name}</li>
