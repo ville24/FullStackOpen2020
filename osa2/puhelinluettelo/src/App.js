@@ -27,9 +27,13 @@ const App = () => {
       number: newNumber,
     }
     const addContact = () => {
-      setPersons(persons.concat(newObject))
-      setNewName('')
-      setNewNumber('')
+      axios
+        .post('http://localhost:3001/persons', newObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setNewName('')
+          setNewNumber('')
+        })
     }  
 
     persons.filter(person => person.name===newName).length
