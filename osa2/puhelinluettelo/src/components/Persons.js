@@ -1,13 +1,16 @@
 import React from 'react'
 
-const Persons = ({list}) => 
+const Persons = ({list,handleDeletePerson}) => 
   <div>
     {list.map((person) => 
-      <Person key={person.id} person={person} />)
+      <Person key={person.id} person={person} handleDeletePerson={handleDeletePerson}/>)
     }
   </div>
 
-const Person = ({person}) => 
-  <p>{person.name} {person.number}</p>
+const Person = ({person, handleDeletePerson}) => 
+  <p>{person.name} {person.number} <Button person={person} handleDeletePerson={handleDeletePerson}/></p>
 
-  export default Persons
+const Button = ({person, handleDeletePerson}) =>
+  <button type='button' value={person.id} onClick={handleDeletePerson}>delete</button>
+
+export default Persons
