@@ -21,12 +21,13 @@ const App = () => {
   const saveContact = (event) => {
     event.preventDefault()
 
-    const newObject = {
-      id: persons.length + 1,
-      name: newName,
-      number: newNumber,
-    }
     const addContact = () => {
+      const newObject = {
+        id: persons.length + 1,
+        name: newName,
+        number: newNumber,
+      }
+
       personsService
       .create(newObject)
       .then(response => {
@@ -34,10 +35,30 @@ const App = () => {
           setNewName('')
           setNewNumber('')
       })
+    }
+
+    const updateContact = (changedPerson) => {
+      const changedObject= {...changedPerson, number: newNumber}
+
+      personsService
+      .update(changedPerson.id, changedObject)
+      .then(response => {
+          setPersons(persons.map(person => person.id !==changedPerson.id ? person : response.data))
+          setNewName('')
+          setNewNumber('')
+      })
     }  
 
-    persons.filter(person => person.name===newName).length
-      ? alert(`${newName} is already added to phonebook`)
+    const personMatch=persons.find(person => person.name===newName)
+    personMatch
+      ? (
+          personMatch.number===newNumber
+          ? alert(`${newName} is already added to phonebook`)
+          : (
+              window.confirm(`${newName} is already added to phonebook, replace the old number with the one?`)
+              && updateContact(personMatch)
+            )
+      )
       : addContact()
   }
 
