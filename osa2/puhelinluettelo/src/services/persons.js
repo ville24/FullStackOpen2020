@@ -11,6 +11,7 @@ const create = newObject => {
 
 const update = (id, newObject) => {
   return axios.put(`${baseUrl}/${id}`, newObject)
+
 }
 
 const del = (id) => {
