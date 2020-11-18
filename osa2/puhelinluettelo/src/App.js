@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 import personsService from './services/persons'
 
 const App = () => {
@@ -9,7 +10,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
-  
+  const [ notification , setNotification ] = useState(null)
+
   useEffect(() => {
     personsService
       .getAll()
@@ -34,6 +36,10 @@ const App = () => {
           setPersons(persons.concat(response.data))
           setNewName('')
           setNewNumber('')
+          setNotification(`Added ${response.data.name}`)
+          setTimeout(() => {
+            setNotification(null)
+          }, 3000)
       })
     }
 
@@ -46,6 +52,10 @@ const App = () => {
           setPersons(persons.map(person => person.id !==changedPerson.id ? person : response.data))
           setNewName('')
           setNewNumber('')
+          setNotification(`Updated ${response.data.name}`)
+          setTimeout(() => {
+            setNotification(null)
+          }, 3000)
       })
     }  
 
@@ -63,11 +73,16 @@ const App = () => {
   }
 
   const handleDeletePerson = (event) => {
-    window.confirm(`Delete ${persons.filter(person => person.id===parseInt(event.target.value))[0].name}?`)
+    const name = persons.filter(person => person.id===parseInt(event.target.value))[0].name
+    window.confirm(`Delete ${name}?`)
     && (personsService
       .del(event.target.value)
       .then(response => {
         setPersons(persons.filter(person => person.id !== parseInt(event.target.value) && person))
+        setNotification(`Deleted ${name}`)
+          setTimeout(() => {
+            setNotification(null)
+          }, 3000)
       }))
   }
 
@@ -90,6 +105,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={notification} />
 
       <Filter filter={filter} handleFilter={handleFilter} />
       
