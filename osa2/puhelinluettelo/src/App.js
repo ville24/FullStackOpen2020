@@ -67,27 +67,32 @@ const App = () => {
           }, 3000)
       })
     }  
-
+    
     const personMatch=persons.find(person => person.name===newName)
-    personMatch
-      ? (
-          personMatch.number===newNumber
-          ? alert(`${newName} is already added to phonebook`)
-          : (
-              window.confirm(`${newName} is already added to phonebook, replace the old number with the one?`)
-              && updateContact(personMatch)
-            )
+        
+    !newName || !newNumber
+    ? alert('name or number missing')
+    : (
+        personMatch
+          ? (
+              personMatch.number===newNumber
+              ? alert(`${newName} is already added to phonebook`)
+              : (
+                  window.confirm(`${newName} is already added to phonebook, replace the old number with the one?`)
+                  && updateContact(personMatch)
+                )
+          )
+          : addContact()
       )
-      : addContact()
   }
 
   const handleDeletePerson = (event) => {
-    const name = persons.filter(person => person.id===parseInt(event.target.value))[0].name
+    const name = persons.filter(person => person.id===event.target.value)[0].name
     window.confirm(`Delete ${name}?`)
     && (personsService
       .del(event.target.value)
       .then(response => {
-        setPersons(persons.filter(person => person.id !== parseInt(event.target.value) && person))
+        setPersons(persons.filter(person => person.id !== event.target.value && person))
         setNotification(`Deleted ${name}`)
           setTimeout(() => {
             setNotification(null)
