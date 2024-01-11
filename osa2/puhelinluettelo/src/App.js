@@ -43,6 +43,12 @@ const App = () => {
             setNotification(null)
           }, 3000)
       })
+      .catch(error => {
+        setError(`${error.response.data.error}`)
+        setTimeout(() => {
+          setError(null)
+        }, 3000)
+      })
     }
 
     const updateContact = (changedPerson) => {
